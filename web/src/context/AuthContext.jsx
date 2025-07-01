@@ -1,17 +1,19 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import Cookies from "universal-cookie";
 
 const AuthContext = createContext();
+const cookies = new Cookies();
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(() => localStorage.getItem("token") || null);
+  const [token, setToken] = useState(() => cookies.get("token") || null);
 
   const login = (newToken) => {
-    localStorage.setItem("token", newToken);
+    cookies.set("token", newToken, { path: "/" });
     setToken(newToken);
   };
 
   const logout = () => {
-    localStorage.removeItem("token");
+    cookies.remove("token", { path: "/" });
     setToken(null);
   };
 
@@ -24,5 +26,4 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// ✅ THIS IS IMPORTANT
 export const useAuth = () => useContext(AuthContext);
