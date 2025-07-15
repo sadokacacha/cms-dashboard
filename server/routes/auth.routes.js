@@ -1,9 +1,16 @@
 import express from 'express';
-import { login, register } from '../controllers/auth.controller.js';
+import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
-router.post('/login', login);
-router.post('/register', register); // For testing; remove or protect later
+router.post('/login', (req, res) => {
+  const { email } = req.body;
+
+  const user = { id: 1, email }; // fake user
+
+  const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+  res.json({ token });
+});
 
 export default router;

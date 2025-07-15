@@ -1,7 +1,7 @@
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axiosClient from "../services/axios-client"; // ✅ use the client
 
 export default function Login() {
   const { login, isAuthenticated } = useAuth();
@@ -18,7 +18,7 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
+      const res = await axiosClient.post("/auth/login", {
         email,
         password,
       });
@@ -47,15 +47,13 @@ export default function Login() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-              <button
-  type="submit"
-  className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
->
-  Login
-</button>
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+        >
+          Login
+        </button>
       </form>
-
     </div>
-    
   );
 }
