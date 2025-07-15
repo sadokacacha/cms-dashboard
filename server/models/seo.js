@@ -1,4 +1,4 @@
-import getDB from "../db.js";
+import getDB from "../config/db.js";
 
 // Get SEO by path
 export async function getSeoByPath(path) {

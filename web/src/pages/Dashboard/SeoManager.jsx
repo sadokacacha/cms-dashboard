@@ -14,16 +14,27 @@ export default function SeoManager() {
 
   useEffect(() => {
     if (path) {
-      axiosClient.get(`/meta${path}`).then(res => {
-        const data = res.data || {};
-        setForm({
-          title: data.title || "",
-          description: data.description || "",
-          ogTitle: data.ogTitle || "",
-          ogImage: data.ogImage || "",
-          scripts: data.scripts ? JSON.parse(data.scripts) : []
+      axiosClient
+        .get("/meta", { params: { path } }) // ✅ use query param
+        .then(res => {
+          const data = res.data || {};
+          setForm({
+            title: data.title || "",
+            description: data.description || "",
+            ogTitle: data.ogTitle || "",
+            ogImage: data.ogImage || "",
+            scripts: data.scripts ? JSON.parse(data.scripts) : []
+          });
+        })
+        .catch(() => {
+          setForm({
+            title: "",
+            description: "",
+            ogTitle: "",
+            ogImage: "",
+            scripts: []
+          });
         });
-      });
     }
   }, [path]);
 

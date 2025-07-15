@@ -9,7 +9,8 @@ export function useSeoMeta() {
   useEffect(() => {
     if (pathname === "/login") return;
 
-    axiosClient.get(`/meta${pathname}`)
+    axiosClient
+      .get("/meta", { params: { path: pathname } }) // ✅ FIXED
       .then(res => setMeta(res.data))
       .catch(() => setMeta(null));
   }, [pathname]);
