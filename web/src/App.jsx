@@ -4,7 +4,6 @@ import DashboardLayout from "./pages/Dashboard/DashboardLayout";
 import Dashboard from "./pages/Dashboard";
 import Articles from "./pages/Dashboard/Articles";
 import SeoManager from "./pages/Dashboard/SeoManager";
-import { HelmetProvider } from "react-helmet-async";
 import { useAuth } from "./context/AuthContext";
 
 function ProtectedRoute({ children }) {
@@ -15,7 +14,6 @@ function ProtectedRoute({ children }) {
 
 function App() {
   return (
-    <HelmetProvider>
       <BrowserRouter>
         <Routes>
           {/* Public route */}
@@ -39,7 +37,6 @@ function App() {
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </BrowserRouter>
-    </HelmetProvider>
   );
 }
 

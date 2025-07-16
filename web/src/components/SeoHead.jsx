@@ -6,15 +6,22 @@ export default function SeoHead() {
   if (!meta) return null;
 
   return (
-    <Helmet>
-      <title>{meta.title}</title>
-      <meta name="description" content={meta.description} />
-      <meta property="og:title" content={meta.ogTitle} />
-      <meta property="og:image" content={meta.ogImage} />
-      {meta.scripts &&
-        JSON.parse(meta.scripts).map((s, i) => (
-          <script key={i} dangerouslySetInnerHTML={{ __html: s.script }} />
-        ))}
-    </Helmet>
+<Helmet>
+  {meta.title && <title>{meta.title}</title>}
+  {meta.description && (
+    <meta name="description" content={meta.description} />
+  )}
+  {meta.ogTitle && (
+    <meta property="og:title" content={meta.ogTitle} />
+  )}
+  {meta.ogImage && (
+    <meta property="og:image" content={meta.ogImage} />
+  )}
+  {meta.scripts &&
+    JSON.parse(meta.scripts).map((s, i) => (
+      <script key={i} dangerouslySetInnerHTML={{ __html: s.script }} />
+    ))}
+</Helmet>
+
   );
 }

@@ -6,14 +6,17 @@ export function useSeoMeta() {
   const [meta, setMeta] = useState(null);
   const { pathname } = useLocation();
 
-  useEffect(() => {
-    if (pathname === "/login") return;
+useEffect(() => {
+  if (pathname === "/login") return;
 
-    axiosClient
-      .get("/meta", { params: { path: pathname } }) // ✅ FIXED
-      .then(res => setMeta(res.data))
-      .catch(() => setMeta(null));
-  }, [pathname]);
+  axiosClient.get(`/meta?path=${pathname}`)
+    .then(res => {
+      console.log("Fetched meta:", res.data); // ✅ Log here
+      setMeta(res.data);
+    })
+    .catch(() => setMeta(null));
+}, [pathname]);
+
 
   return meta;
 }

@@ -1,22 +1,25 @@
-import getDB from "../config/db.js";
+import { DataTypes, Model } from 'sequelize';
+import sequelize from '../config/db.js';
 
-// Get SEO by path
-export async function getSeoByPath(path) {
-  const db = await getDB();
-  return db.get("SELECT * FROM seo WHERE path = ?", [path]);
-}
+class SeoMeta extends Model {}
 
-// Create or update SEO meta
-export async function upsertSeoMeta({ path, title, description, ogTitle, ogImage, scripts }) {
-  const db = await getDB();
-  return db.run(`
-    INSERT INTO seo (path, title, description, ogTitle, ogImage, scripts)
-    VALUES (?, ?, ?, ?, ?, ?)
-    ON CONFLICT(path) DO UPDATE SET
-      title = excluded.title,
-      description = excluded.description,
-      ogTitle = excluded.ogTitle,
-      ogImage = excluded.ogImage,
-      scripts = excluded.scripts
-  `, [path, title, description, ogTitle, ogImage, scripts]);
-}
+SeoMeta.init(
+  {
+    path: {
+      type: DataTypes.STRING,
+      primaryKey: true,
+    },
+    title: DataTypes.STRING,
+    description: DataTypes.STRING,
+    ogTitle: DataTypes.STRING,
+    ogImage: DataTypes.STRING,
+    scripts: DataTypes.TEXT,
+  },
+  {
+    sequelize,
+    modelName: 'SeoMeta',
+    tableName: 'seo',
+  }
+);
+
+export default SeoMeta;
