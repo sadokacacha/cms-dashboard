@@ -2,7 +2,14 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import DashboardLayout from "./pages/Dashboard/DashboardLayout";
 import Dashboard from "./pages/Dashboard";
-import Articles from "./pages/Dashboard/Articles";
+
+import Articles from "./pages/Dashboard/Articles/index";
+import NewArticle from "./pages/Dashboard/Articles/NewArticle";
+import EditArticle from "./pages/Dashboard/Articles/EditArticle";
+
+
+
+
 import SeoManager from "./pages/Dashboard/SeoManager";
 import { useAuth } from "./context/AuthContext";
 
@@ -30,6 +37,10 @@ function App() {
           >
             <Route index element={<Dashboard />} />
             <Route path="articles" element={<Articles />} />
+            <Route path="articles/new" element={<NewArticle />} />
+            <Route path="articles/edit/:id" element={<EditArticle />} />
+
+
             <Route path="seo" element={<SeoManager />} />
           </Route>
 

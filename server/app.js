@@ -7,7 +7,6 @@ import sequelize from './config/db.js';
 
 
 import authRoutes from './routes/auth.routes.js';
-import articleRoutes from './routes/article.routes.js';
 import metaRoutes from "./routes/meta.routes.js";
 import articleRoutes from "./routes/article.routes.js";
 
@@ -15,7 +14,7 @@ import articleRoutes from "./routes/article.routes.js";
 
 import User from './models/User.js';
 import SeoMeta from './models/seo.js'; // ✅ now a Sequelize model
-import Article from "./models/article.js";
+import Article from "./models/Article.js";
 
 
 dotenv.config();
@@ -28,7 +27,6 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/articles', articleRoutes);
 app.use("/api/meta", metaRoutes);
-app.use("/api/articles", articleRoutes);
 
 
 

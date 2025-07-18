@@ -17,7 +17,6 @@ export default function Navbar() {
       <div className="flex gap-4 items-center">
         <h1 className="text-xl font-bold text-gray-800">CMS Dashboard</h1>
 
-        {/* Navigation links */}
         <NavLink
           to="/dashboard"
           className={({ isActive }) =>
@@ -26,6 +25,7 @@ export default function Navbar() {
         >
           Home
         </NavLink>
+
         <NavLink
           to="/dashboard/articles"
           className={({ isActive }) =>
@@ -34,6 +34,7 @@ export default function Navbar() {
         >
           Articles
         </NavLink>
+
         <NavLink
           to="/dashboard/seo"
           className={({ isActive }) =>
