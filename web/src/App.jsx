@@ -7,6 +7,9 @@ import Articles from "./pages/Dashboard/Articles/index";
 import NewArticle from "./pages/Dashboard/Articles/NewArticle";
 import EditArticle from "./pages/Dashboard/Articles/EditArticle";
 
+import Products from "./pages/Dashboard/Products"; 
+import NewProduct from "./pages/Dashboard/Products/NewProduct"; 
+import EditProduct from "./pages/Dashboard/Products/EditProduct"; 
 
 
 
@@ -40,7 +43,9 @@ function App() {
             <Route path="articles/new" element={<NewArticle />} />
             <Route path="articles/edit/:id" element={<EditArticle />} />
 
-
+            <Route path="products" element={<Products />} />
+            <Route path="products/new" element={<NewProduct />} />
+            <Route path="products/edit/:id" element={<EditProduct />} />
             <Route path="seo" element={<SeoManager />} />
           </Route>
 

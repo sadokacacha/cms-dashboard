@@ -35,6 +35,17 @@ export default function Navbar() {
           Articles
         </NavLink>
 
+
+
+        <NavLink
+  to="/dashboard/products"
+  className={({ isActive }) =>
+    `text-sm ${isActive ? "font-bold text-blue-600" : "text-gray-600"}`
+  }
+>
+  Products
+</NavLink>
+
         <NavLink
           to="/dashboard/seo"
           className={({ isActive }) =>

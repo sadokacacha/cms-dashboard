@@ -3,6 +3,7 @@ import SeoMeta from "../models/seo.js";
 
 const router = express.Router();
 
+
 router.get("/", async (req, res) => {
   try {
     const { path } = req.query;
@@ -15,6 +16,7 @@ router.get("/", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
 
 router.post("/", async (req, res) => {
   try {
