@@ -1,44 +1,21 @@
-import { DataTypes, Model } from 'sequelize';
+import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
-import sequelize from '../config/db.js';
 
-class User extends Model {
-  async validPassword(password) {
-    return bcrypt.compare(password, this.password);
-  }
-}
+const userSchema = new mongoose.Schema({
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  role: { type: String, enum: ['admin', 'editor'], default: 'admin' },
+});
 
-User.init(
-  {
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-      validate: { isEmail: true },
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    role: {
-      type: DataTypes.ENUM('admin', 'editor'),
-      defaultValue: 'admin',
-    },
-  },
-  {
-    sequelize,
-    modelName: 'User',
-    hooks: {
-      beforeCreate: async (user) => {
-        user.password = await bcrypt.hash(user.password, 10);
-      },
-      beforeUpdate: async (user) => {
-        if (user.changed('password')) {
-          user.password = await bcrypt.hash(user.password, 10);
-        }
-      },
-    },
-  }
-);
+// Hash password before saving
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
+  this.password = await bcrypt.hash(this.password, 10);
+  next();
+});
 
-export default User;
+userSchema.methods.validPassword = function (password) {
+  return bcrypt.compare(password, this.password);
+};
+
+export default mongoose.model('User', userSchema);

@@ -15,7 +15,6 @@ const fetchArticles = async () => {
   const res = await axiosClient.get("/articles");
   setArticles(res.data);
 
-  console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 };
 
 const deleteArticle = async (id) => {

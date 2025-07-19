@@ -1,25 +1,12 @@
-import { DataTypes, Model } from 'sequelize';
-import sequelize from '../config/db.js';
+import mongoose from 'mongoose';
 
-class SeoMeta extends Model {}
+const seoSchema = new mongoose.Schema({
+  path: { type: String, required: true, unique: true },
+  title: String,
+  description: String,
+  ogTitle: String,
+  ogImage: String,
+  scripts: String,
+});
 
-SeoMeta.init(
-  {
-    path: {
-      type: DataTypes.STRING,
-      primaryKey: true,
-    },
-    title: DataTypes.STRING,
-    description: DataTypes.STRING,
-    ogTitle: DataTypes.STRING,
-    ogImage: DataTypes.STRING,
-    scripts: DataTypes.TEXT,
-  },
-  {
-    sequelize,
-    modelName: 'SeoMeta',
-    tableName: 'seo',
-  }
-);
-
-export default SeoMeta;
+export default mongoose.model('SeoMeta', seoSchema);

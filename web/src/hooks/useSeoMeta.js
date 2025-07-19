@@ -11,7 +11,6 @@ useEffect(() => {
 
   axiosClient.get(`/meta?path=${pathname}`)
     .then(res => {
-      console.log("Fetched meta:", res.data); // ✅ Log here
       setMeta(res.data);
     })
     .catch(() => setMeta(null));

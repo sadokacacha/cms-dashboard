@@ -1,33 +1,12 @@
-// server/models/article.js
-import { DataTypes } from "sequelize";
-import sequelize from "../config/db.js";
+import mongoose from 'mongoose';
 
-const Article = sequelize.define("Article", {
-  title: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  content: {
-    type: DataTypes.TEXT,
-    allowNull: false,
-  },
-  image: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  tags: {
-    type: DataTypes.STRING, 
-    allowNull: true,
-  },
-  category: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  date: {
-    type: DataTypes.DATE,
-    allowNull: false,
-    defaultValue: DataTypes.NOW,
-  },
+const articleSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  content: { type: String, required: true },
+  image: String,
+  tags: String,
+  category: String,
+  date: { type: Date, default: Date.now },
 });
 
-export default Article;
+export default mongoose.model('Article', articleSchema);
