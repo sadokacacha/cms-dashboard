@@ -25,8 +25,7 @@ export default function Products() {
 
     try {
       await axiosClient.delete(`/products/${id}`);
-      fetchProducts();
-      alert("Product deleted successfully");
+      fetchProducts(); // refresh list
     } catch (err) {
       console.error("Failed to delete product:", err);
       alert("Delete failed.");
@@ -45,40 +44,42 @@ export default function Products() {
           </button>
         </Link>
 
-        {products.length === 0 && <p>No products found.</p>}
+        {products.length === 0 ? (
+          <p>No products found.</p>
+        ) : (
+          <div className="space-y-4">
+            {products.map((product) => (
+              <div key={product._id} className="border p-4 rounded shadow">
+                <h2 className="text-lg font-semibold">{product.name}</h2>
+                <p className="text-sm text-gray-600 mb-1">{product.category}</p>
+                {product.image && (
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-32 h-32 object-cover rounded mb-2"
+                  />
+                )}
+                <p>{product.description}</p>
+                <p className="mt-2 font-bold">Price: ${product.price}</p>
+                <p>Stock: {product.stock}</p>
 
-        <div className="space-y-4">
-          {products.map((product) => (
-            <div key={product.id} className="border p-4 rounded shadow">
-              <h2 className="text-lg font-semibold">{product.name}</h2>
-              <p className="text-sm text-gray-600 mb-1">{product.category}</p>
-{product.image && (
-  <img
-  src={product.image || "https://via.placeholder.com/150"}
-  alt={product.name}
-  className="w-32 mb-2"
-/>
-)}
-              <p>{product.description}</p>
-              <p className="mt-2 font-bold">Price: ${product.price}</p>
-              <p>Stock: {product.stock}</p>
-
-              <div className="mt-2 space-x-2">
-                <Link to={`/dashboard/products/edit/${product.id}`}>
-                  <button className="bg-blue-500 text-white px-2 py-1 rounded">
-                    Edit
+                <div className="mt-2 space-x-2">
+                  <Link to={`/dashboard/products/edit/${product._id}`}>
+                    <button className="bg-blue-500 text-white px-2 py-1 rounded">
+                      Edit
+                    </button>
+                  </Link>
+                  <button
+                    onClick={() => deleteProduct(product._id)}
+                    className="bg-red-500 text-white px-2 py-1 rounded"
+                  >
+                    Delete
                   </button>
-                </Link>
-                <button
-                  onClick={() => deleteProduct(product.id)}
-                  className="bg-red-500 text-white px-2 py-1 rounded"
-                >
-                  Delete
-                </button>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </>
   );

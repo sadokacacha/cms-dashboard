@@ -1,8 +1,8 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-
 import connectDB from './config/db.js'; 
+
 import authRoutes from './routes/auth.routes.js';
 import metaRoutes from "./routes/meta.routes.js";
 import articleRoutes from "./routes/article.routes.js";
@@ -12,13 +12,17 @@ dotenv.config();
 
 const app = express();
 
+// Connect to MongoDB
 connectDB();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-// Routes
+// ✅ Serve uploaded images statically
+app.use("/uploads", express.static("public/uploads"));
+
+// API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/articles', articleRoutes);
 app.use("/api/meta", metaRoutes);

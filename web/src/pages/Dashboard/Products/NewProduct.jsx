@@ -7,11 +7,11 @@ export default function NewProduct() {
   const [form, setForm] = useState({
     name: "",
     description: "",
-    image: "",
     price: "",
     stock: "",
     category: "",
   });
+  const [image, setImage] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -19,10 +19,21 @@ export default function NewProduct() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const handleFileChange = (e) => {
+    setImage(e.target.files[0]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+    Object.entries(form).forEach(([key, value]) => formData.append(key, value));
+    if (image) formData.append("image", image);
+
     try {
-      await axiosClient.post("/products", form);
+      await axiosClient.post("/products", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
       navigate("/dashboard/products");
     } catch (err) {
       console.error(err);
@@ -37,15 +48,59 @@ export default function NewProduct() {
         <h1 className="text-2xl font-bold mb-4">Add New Product</h1>
         {error && <p className="text-red-500 mb-2">{error}</p>}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input type="text" name="name" value={form.name} onChange={handleChange} placeholder="Name" required className="w-full p-2 border rounded" />
-          <textarea name="description" value={form.description} onChange={handleChange} placeholder="Description" required className="w-full p-2 border rounded h-24" />
-          <input type="text" name="image" value={form.image} onChange={handleChange} placeholder="Image URL" className="w-full p-2 border rounded" />
-          <input type="number" name="price" value={form.price} onChange={handleChange} placeholder="Price" required className="w-full p-2 border rounded" />
-          <input type="number" name="stock" value={form.stock} onChange={handleChange} placeholder="Stock" required className="w-full p-2 border rounded" />
-          <input type="text" name="category" value={form.category} onChange={handleChange} placeholder="Category" className="w-full p-2 border rounded" />
-
-          <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded">
+        <form onSubmit={handleSubmit} className="space-y-4" encType="multipart/form-data">
+          <input
+            name="name"
+            value={form.name}
+            placeholder="Name"
+            className="w-full p-2 border rounded"
+            onChange={handleChange}
+            required
+          />
+          <textarea
+            name="description"
+            value={form.description}
+            placeholder="Description"
+            className="w-full p-2 border rounded h-24"
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="w-full"
+          />
+          <input
+            name="price"
+            value={form.price}
+            type="number"
+            placeholder="Price"
+            className="w-full p-2 border rounded"
+            onChange={handleChange}
+            required
+          />
+          <input
+            name="stock"
+            value={form.stock}
+            type="number"
+            placeholder="Stock"
+            className="w-full p-2 border rounded"
+            onChange={handleChange}
+            required
+          />
+          <input
+            name="category"
+            value={form.category}
+            placeholder="Category"
+            className="w-full p-2 border rounded"
+            onChange={handleChange}
+          />
+          <button
+            type="submit"
+            className="bg-green-600 text-white px-4 py-2 rounded"
+          >
             Create Product
           </button>
         </form>
