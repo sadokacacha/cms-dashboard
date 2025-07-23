@@ -7,7 +7,15 @@ const cookies = new Cookies();
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(() => cookies.get("token") || null);
 
-  const login = (newToken) => {
+  const login = (newToken, remember = false) => {
+
+      const options = { path: "/" };
+
+      if (remember) {
+    // Persist cookie for 7 days
+    options.expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+  }
+
     cookies.set("token", newToken, { path: "/" });
     setToken(newToken);
   };

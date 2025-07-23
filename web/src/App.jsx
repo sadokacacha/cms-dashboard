@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Login from "./pages/Login";
+import Login from "./pages/Dashboard/auth/Login";
 import DashboardLayout from "./pages/Dashboard/DashboardLayout";
 import Dashboard from "./pages/Dashboard";
 
@@ -10,6 +10,10 @@ import EditArticle from "./pages/Dashboard/Articles/EditArticle";
 import Products from "./pages/Dashboard/Products"; 
 import NewProduct from "./pages/Dashboard/Products/NewProduct"; 
 import EditProduct from "./pages/Dashboard/Products/EditProduct"; 
+
+
+import ForgotPassword from "./pages/Dashboard/auth/ForgotPassword";
+
 
 
 
@@ -28,6 +32,7 @@ function App() {
         <Routes>
           {/* Public route */}
           <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
 
           {/* Protected dashboard routes */}
           <Route

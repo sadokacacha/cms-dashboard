@@ -9,19 +9,19 @@ const run = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
 
-    const existing = await User.findOne({ email: 'admin@example.com' });
+    const existing = await User.findOne({ email: 'sadokacacha1998@gmail.com' });
     if (existing) {
       console.log('❗️User already exists');
       process.exit();
     }
 
     await User.create({
-      email: 'admin@example.com',
+      email: 'sadokacacha1998@gmail.com',
       password: '123456',
       role: 'admin',
     });
 
-    console.log('✅ Test user created: admin@example.com / 123456');
+    console.log('✅ Test user created: sadokacacha1998@gmail.com / 123456');
     process.exit();
   } catch (err) {
     console.error('Error creating user:', err);
