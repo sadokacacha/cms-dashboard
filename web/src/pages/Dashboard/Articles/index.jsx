@@ -57,7 +57,7 @@ export default function Articles() {
                 </p>
                 {article.image && (
                   <img
-                    src={article.image}
+                    src={`http://localhost:5000/uploads/articles/${article.image}`}
                     alt={article.title}
                     className="w-32 h-32 object-cover rounded mt-2 mb-2"
                   />
