@@ -31,23 +31,32 @@ export const register = async (req, res) => {
     res.status(400).json({ message: 'Error creating user', error: err.message });
   }
 };
+
+
 export const forgotPassword = async (req, res) => {
-  const { email } = req.body;
-  const user = await User.findOne({ email });
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
 
-  if (!user) {
-    return res.status(404).json({ message: 'No user with that email' });
+    if (!user) {
+      return res.status(404).json({ message: 'No user with that email' });
+    }
+
+    const code = crypto.randomInt(100000, 999999).toString();
+    user.resetCode = code;
+    user.resetCodeExpires = Date.now() + 15 * 60 * 1000;
+    await user.save();
+
+    await sendResetCode(email, code);
+
+    res.json({ message: 'Reset code sent to email' });
+  } catch (err) {
+    console.error("❌ forgotPassword error:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
   }
-
-  const code = crypto.randomInt(100000, 999999).toString(); // 6-digit code
-  user.resetCode = code;
-  user.resetCodeExpires = Date.now() + 15 * 60 * 1000; // 15 minutes
-  await user.save();
-
-  await sendResetCode(email, code);
-
-  res.json({ message: 'Reset code sent to email' });
 };
+
+
 
 export const resetPassword = async (req, res) => {
   const { email, code, newPassword } = req.body;

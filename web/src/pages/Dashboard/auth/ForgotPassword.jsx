@@ -1,16 +1,23 @@
 import { useState } from "react";
 import axiosClient from "../../../services/axios-client";
+import { useNavigate } from "react-router-dom";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await axiosClient.post("/auth/forgot-password", { email });
       setMessage(res.data.message || "Reset code sent to your email.");
+
+      // Redirect to reset password page after short delay
+      setTimeout(() => {
+        navigate("/reset-password");
+      }, 2000);
     } catch (err) {
       setError(err.response?.data?.message || "Error sending reset email.");
     }

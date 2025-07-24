@@ -13,6 +13,7 @@ import EditProduct from "./pages/Dashboard/Products/EditProduct";
 
 
 import ForgotPassword from "./pages/Dashboard/auth/ForgotPassword";
+import ResetPassword from "./pages/Dashboard/auth/ResetPassword";
 
 
 
@@ -33,6 +34,8 @@ function App() {
           {/* Public route */}
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+
 
           {/* Protected dashboard routes */}
           <Route
