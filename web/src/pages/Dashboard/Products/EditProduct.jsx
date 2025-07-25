@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axiosClient from "../../../services/axios-client";
 import SeoHead from "../../../components/SeoHead";
+import { getImageUrl } from "../../../utils/imagePath";
 
 export default function EditProduct() {
   const { id } = useParams();
@@ -55,7 +56,16 @@ export default function EditProduct() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <input type="text" name="name" value={form.name} onChange={handleChange} placeholder="Name" required className="w-full p-2 border rounded" />
           <textarea name="description" value={form.description} onChange={handleChange} placeholder="Description" required className="w-full p-2 border rounded h-24" />
-          <input type="text" name="image" value={form.image} onChange={handleChange} placeholder="Image URL" className="w-full p-2 border rounded" />
+          
+          {form.image && (
+            <img
+              src={getImageUrl("products", form.image)}
+              alt="Product"
+              className="w-32 h-32 object-cover rounded"
+            />
+          )}
+          <input type="text" name="image" value={form.image} onChange={handleChange} placeholder="Image filename (keep as is if no change)" className="w-full p-2 border rounded" />
+          
           <input type="number" name="price" value={form.price} onChange={handleChange} placeholder="Price" required className="w-full p-2 border rounded" />
           <input type="number" name="stock" value={form.stock} onChange={handleChange} placeholder="Stock" required className="w-full p-2 border rounded" />
           <input type="text" name="category" value={form.category} onChange={handleChange} placeholder="Category" className="w-full p-2 border rounded" />

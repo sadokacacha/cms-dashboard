@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axiosClient from "../../../services/axios-client";
 import { Link } from "react-router-dom";
 import SeoHead from "../../../components/SeoHead";
+import { getImageUrl } from "../../../utils/imagePath";
 
 export default function Articles() {
   const [articles, setArticles] = useState([]);
@@ -20,8 +21,7 @@ export default function Articles() {
   };
 
   const deleteArticle = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this article?");
-    if (!confirmDelete) return;
+    if (!window.confirm("Are you sure you want to delete this article?")) return;
 
     try {
       await axiosClient.delete(`/articles/${id}`);
@@ -57,7 +57,7 @@ export default function Articles() {
                 </p>
                 {article.image && (
                   <img
-                    src={`http://localhost:5000/uploads/articles/${article.image}`}
+                    src={getImageUrl("articles", article.image)}
                     alt={article.title}
                     className="w-32 h-32 object-cover rounded mt-2 mb-2"
                   />

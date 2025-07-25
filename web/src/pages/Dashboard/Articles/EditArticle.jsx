@@ -1,8 +1,8 @@
-// pages/Dashboard/Articles/EditArticle.jsx
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axiosClient from "../../../services/axios-client";
 import SeoHead from "../../../components/SeoHead";
+import { getImageUrl } from "../../../utils/imagePath";
 
 export default function EditArticle() {
   const { id } = useParams();
@@ -72,13 +72,20 @@ export default function EditArticle() {
             placeholder="Content"
             required
           />
+          {form.image && (
+            <img
+              src={getImageUrl("articles", form.image)}
+              alt="Article"
+              className="w-32 h-32 object-cover rounded"
+            />
+          )}
           <input
             type="text"
             name="image"
             value={form.image}
             onChange={handleChange}
             className="w-full p-2 border rounded"
-            placeholder="Image URL"
+            placeholder="Image filename"
           />
           <input
             type="text"

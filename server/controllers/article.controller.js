@@ -11,26 +11,22 @@ export const getArticles = async (req, res) => {
 
 export const createArticle = async (req, res) => {
   try {
-    const { title, content, tags, category } = req.body;
-
-    if (!title || !content) {
-      return res.status(400).json({ message: "Missing required fields" });
-    }
-
-    const imagePath = req.file ? `/uploads/articles/${req.file.filename}` : null;
+    const { title, content, tags, category, date } = req.body;
+    const image = req.file?.filename; // ✅ Only filename
 
     const article = new Article({
       title,
       content,
       tags,
       category,
-      image: imagePath,
+      date,
+      image,
     });
 
     await article.save();
     res.status(201).json(article);
   } catch (err) {
-    res.status(400).json({ message: "Error creating article", error: err.message });
+    res.status(500).json({ message: "Error creating article." });
   }
 };
 

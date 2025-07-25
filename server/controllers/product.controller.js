@@ -22,12 +22,7 @@ export const getProductById = async (req, res) => {
 export const createProduct = async (req, res) => {
   try {
     const { name, description, price, stock, category } = req.body;
-
-    if (!name || !description || !price || !stock) {
-      return res.status(400).json({ message: "Missing required fields" });
-    }
-
-    const imagePath = req.file ? `/uploads/products/${req.file.filename}` : null;
+    const image = req.file?.filename; // ✅ Only store the filename
 
     const product = new Product({
       name,
@@ -35,14 +30,13 @@ export const createProduct = async (req, res) => {
       price,
       stock,
       category,
-      image: imagePath,
+      image, // ✅ Don't include folder path
     });
 
     await product.save();
     res.status(201).json(product);
   } catch (err) {
-    console.error("Product creation error:", err);
-    res.status(400).json({ message: "Error creating product", error: err.message });
+    res.status(500).json({ message: "Error creating product." });
   }
 };
 

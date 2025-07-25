@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axiosClient from "../../../services/axios-client";
 import SeoHead from "../../../components/SeoHead";
+import { getImageUrl } from "../../../utils/imagePath";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -20,8 +21,7 @@ export default function Products() {
   };
 
   const deleteProduct = async (id) => {
-    const confirm = window.confirm("Are you sure you want to delete this product?");
-    if (!confirm) return;
+    if (!window.confirm("Are you sure you want to delete this product?")) return;
 
     try {
       await axiosClient.delete(`/products/${id}`);
@@ -54,7 +54,7 @@ export default function Products() {
                 <p className="text-sm text-gray-600 mb-1">{product.category}</p>
                 {product.image && (
                   <img
-                    src={`http://localhost:5000/uploads/products/${product.image}`}
+                    src={getImageUrl("products", product.image)}
                     alt={product.name}
                     className="w-32 h-32 object-cover rounded mb-2"
                   />
