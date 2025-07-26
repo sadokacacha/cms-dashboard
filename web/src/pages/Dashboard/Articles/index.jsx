@@ -35,52 +35,56 @@ export default function Articles() {
 
   return (
     <>
-      <SeoHead title="Articles" />
-      <div className="p-4">
-        <h1 className="text-xl font-bold mb-4">Articles</h1>
-
+    <SeoHead title="Articles" />
+    <div className="p-6">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Articles</h1>
         <Link to="/dashboard/articles/new">
-          <button className="bg-green-600 text-white px-4 py-2 rounded mb-4">
+          <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow">
             + New Article
           </button>
         </Link>
-
-        {articles.length === 0 ? (
-          <p>No articles found.</p>
-        ) : (
-          <div className="space-y-4">
-            {articles.map((article) => (
-              <div key={article._id} className="border p-4 rounded shadow">
-                <h2 className="text-lg font-semibold">{article.title}</h2>
-                <p className="text-sm text-gray-600">
-                  {article.date ? new Date(article.date).toLocaleDateString() : "No date"}
-                </p>
-                {article.image && (
-                  <img
-                    src={getImageUrl("articles", article.image)}
-                    alt={article.title}
-                    className="w-32 h-32 object-cover rounded mt-2 mb-2"
-                  />
-                )}
-                <p className="mt-2">{article.content?.slice(0, 100)}...</p>
-                <div className="mt-2 space-x-2">
-                  <Link to={`/dashboard/articles/edit/${article._id}`}>
-                    <button className="bg-blue-500 text-white px-2 py-1 rounded">
-                      Edit
-                    </button>
-                  </Link>
-                  <button
-                    onClick={() => deleteArticle(article._id)}
-                    className="bg-red-500 text-white px-2 py-1 rounded"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
       </div>
-    </>
+
+      {articles.length === 0 ? (
+        <p className="text-gray-600">No articles found.</p>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {articles.map((article) => (
+            <div key={article._id} className="bg-white rounded-lg shadow p-4">
+              {article.image && (
+                <img
+                  src={getImageUrl("articles", article.image)}
+                  alt={article.title}
+                  className="w-full h-40 object-cover rounded mb-4 hover:scale-105 transition"
+                />
+              )}
+              <h2 className="text-lg font-semibold">{article.title}</h2>
+              <p className="text-sm text-gray-500">
+                {article.date ? new Date(article.date).toLocaleDateString() : "No date"}
+              </p>
+              <p className="text-sm text-gray-700 mt-2">
+                {article.content?.slice(0, 100)}...
+              </p>
+
+              <div className="flex gap-2 mt-4">
+                <Link to={`/dashboard/articles/edit/${article._id}`}>
+                  <button className="px-3 py-1 text-sm bg-blue-500 hover:bg-blue-600 text-white rounded">
+                    Edit
+                  </button>
+                </Link>
+                <button
+                  onClick={() => deleteArticle(article._id)}
+                  className="px-3 py-1 text-sm bg-red-500 hover:bg-red-600 text-white rounded"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </>
   );
 }

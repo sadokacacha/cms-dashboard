@@ -42,53 +42,80 @@ export default function NewArticle() {
 
   return (
     <>
-      <SeoHead title="New Article" />
-      <div className="p-4 max-w-2xl mx-auto">
-        <h1 className="text-2xl font-bold mb-4">Add New Article</h1>
-        {error && <p className="text-red-500 mb-2">{error}</p>}
-        <form onSubmit={handleSubmit} className="space-y-4" encType="multipart/form-data">
+    <SeoHead title="New Article" />
+    <div className="p-6 max-w-3xl mx-auto bg-white shadow rounded-lg">
+      <h1 className="text-2xl font-bold mb-6">📝 Create New Article</h1>
+
+      {error && <p className="text-red-500 mb-4">{error}</p>}
+
+      <form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-5">
+        <div>
+          <label className="block mb-1 text-sm font-medium">Title</label>
           <input
             name="title"
-            placeholder="Title"
-            className="w-full p-2 border rounded"
-            onChange={handleChange}
             value={form.title}
+            onChange={handleChange}
+            placeholder="Article title"
+            className="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-200"
             required
           />
+        </div>
+
+        <div>
+          <label className="block mb-1 text-sm font-medium">Content</label>
           <textarea
             name="content"
-            placeholder="Content"
-            className="w-full p-2 border rounded h-24"
-            onChange={handleChange}
             value={form.content}
+            onChange={handleChange}
+            placeholder="Write your article..."
+            className="w-full px-4 py-2 border rounded h-32 resize-none focus:outline-none focus:ring focus:ring-blue-200"
             required
           />
+        </div>
+
+        <div>
+          <label className="block mb-1 text-sm font-medium">Image</label>
           <input
             type="file"
             name="image"
             accept="image/*"
             onChange={handleFileChange}
-            className="w-full"
+            className="block w-full text-sm"
           />
-          <input
-            name="tags"
-            placeholder="Tags"
-            className="w-full p-2 border rounded"
-            onChange={handleChange}
-            value={form.tags}
-          />
-          <input
-            name="category"
-            placeholder="Category"
-            className="w-full p-2 border rounded"
-            onChange={handleChange}
-            value={form.category}
-          />
-          <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded">
-            Create Article
-          </button>
-        </form>
-      </div>
-    </>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block mb-1 text-sm font-medium">Tags</label>
+            <input
+              name="tags"
+              value={form.tags}
+              onChange={handleChange}
+              placeholder="e.g. tech, react"
+              className="w-full px-4 py-2 border rounded focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <label className="block mb-1 text-sm font-medium">Category</label>
+            <input
+              name="category"
+              value={form.category}
+              onChange={handleChange}
+              placeholder="e.g. Development"
+              className="w-full px-4 py-2 border rounded focus:outline-none"
+            />
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded shadow transition"
+        >
+          ➕ Create Article
+        </button>
+      </form>
+    </div>
+  </>
   );
 }

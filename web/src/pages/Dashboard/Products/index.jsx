@@ -33,54 +33,55 @@ export default function Products() {
   };
 
   return (
-    <>
-      <SeoHead title="Products" />
-      <div className="p-4">
-        <h1 className="text-xl font-bold mb-4">Products</h1>
-
+     <>
+    <SeoHead title="Products" />
+    <div className="p-6">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Products</h1>
         <Link to="/dashboard/products/new">
-          <button className="bg-green-600 text-white px-4 py-2 rounded mb-4">
+          <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow">
             + New Product
           </button>
         </Link>
-
-        {products.length === 0 ? (
-          <p>No products found.</p>
-        ) : (
-          <div className="space-y-4">
-            {products.map((product) => (
-              <div key={product._id} className="border p-4 rounded shadow">
-                <h2 className="text-lg font-semibold">{product.name}</h2>
-                <p className="text-sm text-gray-600 mb-1">{product.category}</p>
-                {product.image && (
-                  <img
-                    src={getImageUrl("products", product.image)}
-                    alt={product.name}
-                    className="w-32 h-32 object-cover rounded mb-2"
-                  />
-                )}
-                <p>{product.description}</p>
-                <p className="mt-2 font-bold">Price: ${product.price}</p>
-                <p>Stock: {product.stock}</p>
-
-                <div className="mt-2 space-x-2">
-                  <Link to={`/dashboard/products/edit/${product._id}`}>
-                    <button className="bg-blue-500 text-white px-2 py-1 rounded">
-                      Edit
-                    </button>
-                  </Link>
-                  <button
-                    onClick={() => deleteProduct(product._id)}
-                    className="bg-red-500 text-white px-2 py-1 rounded"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
       </div>
-    </>
+
+      {products.length === 0 ? (
+        <p className="text-gray-600">No products found.</p>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {products.map((product) => (
+            <div key={product._id} className="bg-white rounded-lg shadow p-4">
+              {product.image && (
+                <img
+                  src={getImageUrl("products", product.image)}
+                  alt={product.name}
+                  className="w-full h-40 object-cover rounded mb-4 hover:scale-105 transition"
+                />
+              )}
+              <h2 className="text-lg font-semibold">{product.name}</h2>
+              <p className="text-sm text-gray-500 mb-1">{product.category}</p>
+              <p className="text-sm text-gray-700 mb-2">{product.description}</p>
+              <p className="font-semibold text-green-700 mb-1">${product.price}</p>
+              <p className="text-sm text-gray-600 mb-2">Stock: {product.stock}</p>
+
+              <div className="flex gap-2 mt-3">
+                <Link to={`/dashboard/products/edit/${product._id}`}>
+                  <button className="px-3 py-1 text-sm bg-blue-500 hover:bg-blue-600 text-white rounded">
+                    Edit
+                  </button>
+                </Link>
+                <button
+                  onClick={() => deleteProduct(product._id)}
+                  className="px-3 py-1 text-sm bg-red-500 hover:bg-red-600 text-white rounded"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </>
   );
 }

@@ -43,68 +43,92 @@ export default function NewProduct() {
 
   return (
     <>
-      <SeoHead title="New Product" />
-      <div className="p-4 max-w-2xl mx-auto">
-        <h1 className="text-2xl font-bold mb-4">Add New Product</h1>
-        {error && <p className="text-red-500 mb-2">{error}</p>}
+    <SeoHead title="New Product" />
+    <div className="p-6 max-w-3xl mx-auto bg-white shadow rounded-lg">
+      <h1 className="text-2xl font-bold mb-6">🛒 Add New Product</h1>
 
-        <form onSubmit={handleSubmit} className="space-y-4" encType="multipart/form-data">
+      {error && <p className="text-red-500 mb-4">{error}</p>}
+
+      <form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-5">
+        <div>
+          <label className="block mb-1 text-sm font-medium">Product Name</label>
           <input
             name="name"
             value={form.name}
-            placeholder="Name"
-            className="w-full p-2 border rounded"
             onChange={handleChange}
+            placeholder="Product name"
+            className="w-full px-4 py-2 border rounded focus:outline-none"
             required
           />
+        </div>
+
+        <div>
+          <label className="block mb-1 text-sm font-medium">Description</label>
           <textarea
             name="description"
             value={form.description}
-            placeholder="Description"
-            className="w-full p-2 border rounded h-24"
             onChange={handleChange}
+            placeholder="Product description"
+            className="w-full px-4 py-2 border rounded h-28 resize-none focus:outline-none"
             required
           />
+        </div>
+
+        <div>
+          <label className="block mb-1 text-sm font-medium">Image</label>
           <input
             type="file"
             name="image"
             accept="image/*"
             onChange={handleFileChange}
-            className="w-full"
+            className="block w-full text-sm"
           />
-          <input
-            name="price"
-            value={form.price}
-            type="number"
-            placeholder="Price"
-            className="w-full p-2 border rounded"
-            onChange={handleChange}
-            required
-          />
-          <input
-            name="stock"
-            value={form.stock}
-            type="number"
-            placeholder="Stock"
-            className="w-full p-2 border rounded"
-            onChange={handleChange}
-            required
-          />
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block mb-1 text-sm font-medium">Price ($)</label>
+            <input
+              name="price"
+              type="number"
+              value={form.price}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border rounded"
+              required
+            />
+          </div>
+          <div>
+            <label className="block mb-1 text-sm font-medium">Stock</label>
+            <input
+              name="stock"
+              type="number"
+              value={form.stock}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border rounded"
+              required
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="block mb-1 text-sm font-medium">Category</label>
           <input
             name="category"
             value={form.category}
-            placeholder="Category"
-            className="w-full p-2 border rounded"
             onChange={handleChange}
+            placeholder="Category name"
+            className="w-full px-4 py-2 border rounded"
           />
-          <button
-            type="submit"
-            className="bg-green-600 text-white px-4 py-2 rounded"
-          >
-            Create Product
-          </button>
-        </form>
-      </div>
-    </>
+        </div>
+
+        <button
+          type="submit"
+          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded shadow transition"
+        >
+          ➕ Create Product
+        </button>
+      </form>
+    </div>
+  </>
   );
 }
