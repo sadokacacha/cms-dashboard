@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import axiosClient from "../../services/axios-client";
-
+import SeoHead from "../../components/SeoHead"; // ✅ Make sure this path is correct
 
 export default function DashboardHome() {
-
   const [stats, setStats] = useState({
     articleCount: 0,
     productCount: 0,
@@ -35,6 +34,7 @@ export default function DashboardHome() {
 
   return (
     <div className="p-4">
+      <SeoHead /> 
       <h1 className="text-2xl font-bold mb-4">Dashboard Overview</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
