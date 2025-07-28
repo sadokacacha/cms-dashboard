@@ -1,4 +1,6 @@
 import Product from "../models/Product.js";
+import slugify from "slugify";
+
 
 export const getProducts = async (req, res) => {
   try {
@@ -22,15 +24,18 @@ export const getProductById = async (req, res) => {
 export const createProduct = async (req, res) => {
   try {
     const { name, description, price, stock, category } = req.body;
-    const image = req.file?.filename; // ✅ Only store the filename
+    const image = req.file?.filename;
+
+    const slug = slugify(name, { lower: true, strict: true }); // 👈 Create slug
 
     const product = new Product({
       name,
+      slug, 
       description,
       price,
       stock,
       category,
-      image, // ✅ Don't include folder path
+      image,
     });
 
     await product.save();
@@ -39,6 +44,7 @@ export const createProduct = async (req, res) => {
     res.status(500).json({ message: "Error creating product." });
   }
 };
+
 
 export const updateProduct = async (req, res) => {
   try {

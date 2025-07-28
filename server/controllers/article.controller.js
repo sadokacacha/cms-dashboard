@@ -1,4 +1,5 @@
 import Article from "../models/Article.js";
+import slugify from "slugify";
 
 export const getArticles = async (req, res) => {
   try {
@@ -24,10 +25,13 @@ export const getArticleById = async (req, res) => {
 export const createArticle = async (req, res) => {
   try {
     const { title, content, tags, category, date } = req.body;
-    const image = req.file?.filename; // ✅ Only filename
+    const image = req.file?.filename;
+
+    const slug = slugify(title, { lower: true, strict: true }); // 👈 Create slug
 
     const article = new Article({
       title,
+      slug, 
       content,
       tags,
       category,

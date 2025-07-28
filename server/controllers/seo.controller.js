@@ -13,16 +13,54 @@ export const getMeta = async (req, res) => {
   }
 };
 
+export const getAllMeta = async (req, res) => {
+  try {
+    const all = await SeoMeta.find({}, 'title path');
+    res.json(all);
+  } catch (err) {
+    res.status(500).json({ message: "Error loading meta list" });
+  }
+};
 export const saveMeta = async (req, res) => {
   try {
-    const { path, title, description, ogTitle, ogImage, scripts } = req.body;
+    const {
+      path,
+      title,
+      description,
+      keywords,
+      canonical,
+      robots,
+      ogTitle,
+      ogDescription,
+      ogImage,
+      ogUrl,
+      ogType,
+      twitterTitle,
+      twitterDescription,
+      twitterImage,
+      twitterCard,
+      twitterSite,
+      scripts,
+      externalScripts,
+      metaType,
+      titleRef,
+      tags,
+    } = req.body;
+
+    const data = {
+      title, description, keywords, canonical, robots,
+      ogTitle, ogDescription, ogImage, ogUrl, ogType,
+      twitterTitle, twitterDescription, twitterImage, twitterCard, twitterSite,
+      scripts, externalScripts, metaType, titleRef, tags,
+      updatedAt: new Date()
+    };
 
     const existing = await SeoMeta.findOne({ path });
 
     if (existing) {
-      await SeoMeta.updateOne({ path }, { title, description, ogTitle, ogImage, scripts });
+      await SeoMeta.updateOne({ path }, data);
     } else {
-      await SeoMeta.create({ path, title, description, ogTitle, ogImage, scripts });
+      await SeoMeta.create({ path, ...data });
     }
 
     res.json({ message: "Meta saved" });
@@ -31,4 +69,5 @@ export const saveMeta = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
 import express from "express";
